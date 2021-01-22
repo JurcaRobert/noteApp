@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="./style.css" />
+    <title>To Do List</title>
+  </head>
+  <body>
+      <header>
+                <h1> ToDo List</h1>
+      
+      </header>
+      <form>
+      
+
+                <input type="text" id="todo-input" class="todo-input">
+                <button class="todo-button" type="submit">
+                    <i class="fas fa-plus"></i>
+
+                </button>
+                </form>
+                <div class="todo-container">
+
+                    <ul class="todo-list"></ul>
+                </div>
+                <div class="todo">
+
+                </div>
+      
+      
+      
+   <script>
+       
+       
+      //Selector
+
+const todoInput= document.getElementById("todo-input");
+const todoButton= document.querySelector(".todo-button");
+const todoList= document.querySelector(".todo-list");
+
+
+//Event lISTENERS
+
+todoButton.addEventListener('click', addTodo);
+todoList.addEventListener('click',deleteCheck); 
+       
+
+//Functions
+
+function addTodo(Event){
+    //prevent form from sbmiting
+    
+   Event.preventDefault();
+    
+    //Todo Div
+    
+    const todoDiv = document.createElement('div');
+    todoDiv.classList.add('todo');
+    
+    //Create li
+    
+    const newTodo = document.createElement('li');
+    console.log(todoInput)
+ 
+    newTodo.innerText = todoInput.value;                            // <- aici daca incerc sa pun todo.input.value //
+    newTodo.classList.add('todo-item');
+    todoDiv.appendChild(newTodo);
+    
+    
+    //check mark button
+    
+    
+    const completedButton = document.createElement('button');
+    completedButton.innerHTML = '<i class="fas fa-check"></i>';
+    completedButton.classList.add("complete-btn");
+    todoDiv.appendChild(completedButton);
+    
+    
+     //check trash button
+    
+     const trashButton = document.createElement("button");
+    trashButton.innerHTML = '<i class="fas fa-trash"></i>';
+    trashButton.classList.add("trash-btn");
+    todoDiv.appendChild(trashButton);
+    
+    
+    //append to list
+    todoList.appendChild(todoDiv);
+    
+    //clear todo input value
+    todoInput.value = "";
+}
+    
+    //deleted check
+    
+    function deleteCheck(e) {
+        const item = e.target;
+        //delete todo
+        
+        if (item.classList[0] === 'trash-btn'){
+            const todo = item.parentElement;
+            // animation
+            
+           todo.classList.add('fall');
+            todo.addEventListener('transitionend', function(){
+               todo.remove(); 
+            });    
+                
+            
+        }
+
+
+      
+  //check mark
+       
+       if (item.classList[0] === 'complete-btn'){
+            const todo = item.parentElement;
+           todo.classList.toggle('complete');
+       }
+ }
+       
+         
+    
+      
+      </script>
+  </body>
+</html>
